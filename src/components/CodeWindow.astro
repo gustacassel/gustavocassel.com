@@ -1,0 +1,29 @@
+---
+import { getContent, type Lang } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { code } = getContent(lang);
+
+const escape = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const token = (kind: string, text: string) => `<span class="tok-${kind}">${escape(text)}</span>`;
+
+// Monta o trecho C# como HTML pronto: chaves e quebras de linha dentro de <pre> não passam bem pelo JSX do Astro.
+const html = [
+  `${token('kw', 'public class')} ${token('type', 'Gustavo')}`,
+  '{',
+  ...code.props.map(([name, value]) => `    ${token('prop', name)} = ${token('str', `"${value}"`)};`),
+  '}<span class="code-caret"></span>',
+].join('\n');
+---
+
+<figure class="code-window" aria-hidden="true">
+  <div class="code-bar">
+    <span class="code-dots"><i></i><i></i><i></i></span>
+    <span class="code-file">{code.file}</span>
+  </div>
+  <pre class="code-body"><code set:html={html} /></pre>
+</figure>

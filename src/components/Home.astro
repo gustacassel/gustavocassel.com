@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from './Icon.astro';
-import IntegrationDemo from './IntegrationDemo.astro';
+import CodeWindow from './CodeWindow.astro';
 import { profile, socialLinks, getContent, type Lang } from '../data/site';
 
 interface Props {
@@ -10,162 +10,164 @@ interface Props {
 
 const { lang } = Astro.props;
 const copy = getContent(lang);
+const { services, platforms, process, experience, stack, about, contact } = copy;
 ---
 
 <BaseLayout lang={lang} title={copy.seo.title} description={copy.seo.description}>
-  <section class="hero shell" aria-labelledby="hero-title">
+  <section class="hero container" aria-labelledby="hero-title">
     <div class="hero-copy">
-      <div class="eyebrow-row">
-        <span class="eyebrow"><i></i> {copy.hero.eyebrow}</span>
-        <span class="hero-location">{copy.hero.location}</span>
-      </div>
-
-      <h1 id="hero-title">
-        {copy.hero.lead}<br />
-        <span>{copy.hero.middle}</span>
-        <em>{copy.hero.accent}</em>
-      </h1>
-
-      <div class="hero-bottom">
-        <p>{copy.hero.summary}</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#about">{copy.hero.primaryCta} <Icon name="arrow-right" size={17} /></a>
-          <a class="button button-ghost" href={profile.linkedin} target="_blank" rel="noopener noreferrer">{copy.hero.secondaryCta} <Icon name="linkedin" size={17} /></a>
-        </div>
+      <p class="eyebrow"><i aria-hidden="true"></i>{copy.hero.eyebrow}</p>
+      <h1 id="hero-title" set:html={copy.hero.title} />
+      <p class="hero-summary">{copy.hero.summary}</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#contact">{copy.hero.primaryCta} <Icon name="arrow-right" size={17} /></a>
+        <a class="button button-ghost" href="#services">{copy.hero.secondaryCta}</a>
       </div>
     </div>
-
-    <div class="hero-demo-wrap">
-      <div class="hero-stamp" aria-hidden="true">
-        <svg viewBox="0 0 100 100">
-          <defs><path id="stamp-path" d="M50,50 m-35,0 a35,35 0 1,1 70,0 a35,35 0 1,1 -70,0" /></defs>
-          <text><textPath href="#stamp-path">{copy.hero.stamp}</textPath></text>
-        </svg>
-        <span>{profile.initials}</span>
-      </div>
-      <IntegrationDemo lang={lang} />
-    </div>
+    <CodeWindow lang={lang} />
   </section>
 
-  <section class="proof-bar" aria-label={copy.techStripAria}>
-    <div class="proof-track">
-      {[false, true].map((isClone) => (
-        <div class="proof-group" aria-hidden={isClone ? 'true' : undefined}>
-          {copy.techStrip.map((item) => (
-            <div class="proof-item">
-              <strong>{item.value}</strong>
-              <span>{item.label}</span>
-              <i aria-hidden="true"></i>
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="section expertise-section shell" id="expertise" aria-labelledby="expertise-title">
-    <div class="section-intro compact" data-reveal>
+  <section class="section container" id="services" aria-labelledby="services-title">
+    <header class="section-head" data-reveal>
       <div>
-        <span class="section-kicker">{copy.expertise.kicker}</span>
-        <h2 id="expertise-title" set:html={copy.expertise.title} />
+        <p class="kicker">{services.kicker}</p>
+        <h2 id="services-title" set:html={services.title} />
       </div>
-      <p>{copy.expertise.intro}</p>
-    </div>
-
-    <div class="expertise-grid">
-      {copy.expertise.items.map((item) => (
-        <article class="expertise-card" data-reveal>
-          <span class="expertise-number">{item.number}</span>
-          <div class="expertise-icon" aria-hidden="true"><i></i><i></i><i></i></div>
+      {services.intro && <p class="section-intro">{services.intro}</p>}
+    </header>
+    <ul class="services-grid">
+      {services.items.map((item, index) => (
+        <li class="card service-card" data-reveal>
+          <div class="service-top">
+            <span class="service-icon"><Icon name={item.icon} size={20} /></span>
+            <span class="index">{String(index + 1).padStart(2, '0')}</span>
+          </div>
           <h3>{item.title}</h3>
           <p>{item.description}</p>
-          <div class="tool-cloud">{item.tools.map((tool) => <span>{tool}</span>)}</div>
-        </article>
+        </li>
       ))}
-    </div>
+    </ul>
   </section>
 
-  <section class="section journey-section" id="about" aria-labelledby="journey-title">
-    <div class="shell journey-grid">
-      <div class="journey-heading" data-reveal>
-        <span class="section-kicker">{copy.journey.kicker}</span>
-        <h2 id="journey-title" set:html={copy.journey.title} />
-        <p>{copy.journey.intro}</p>
-        <a class="text-link" href={profile.linkedin} target="_blank" rel="noopener noreferrer">{copy.journey.link} <Icon name="arrow-up-right" size={16} /></a>
+  <section class="section container" id="platforms" aria-labelledby="platforms-title">
+    <header class="section-head" data-reveal>
+      <div>
+        <p class="kicker">{platforms.kicker}</p>
+        <h2 id="platforms-title" set:html={platforms.title} />
       </div>
-
-      <div class="timeline">
-        {copy.journey.items.map((item, index) => (
-          <article class="timeline-item" data-reveal>
-            <div class="timeline-marker" aria-hidden="true">
-              <strong>{item.marker}</strong>
-              <span>0{index + 1}</span>
-            </div>
-            <div class="timeline-copy">
-              <div class="timeline-company"><h3>{item.company}</h3>{item.location && <span>{item.location}</span>}</div>
-              {item.roles.map((role) => (
-                <div class="timeline-role"><strong>{role.title}</strong><span>{role.dates}</span></div>
-              ))}
-              <p>{item.note}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
+      {platforms.intro && <p class="section-intro">{platforms.intro}</p>}
+    </header>
+    <ul class="platforms-grid">
+      {platforms.items.map((item) => (
+        <li class="card platform-card" data-reveal>
+          <span class="platform-vendor">{item.vendor}</span>
+          <h3>{item.name}</h3>
+          <p>{item.description}</p>
+        </li>
+      ))}
+    </ul>
   </section>
 
-  <section class="section builder-section shell" aria-labelledby="builder-title">
-    <div class="builder-grid">
-      <div class="builder-story" data-reveal>
-        <span class="section-kicker">{copy.builder.kicker}</span>
-        <h2 id="builder-title" set:html={copy.builder.title} />
-        <p class="builder-lead">{copy.builder.lead}</p>
-        <p>{copy.builder.body}</p>
+  <section class="section container" id="process" aria-labelledby="process-title">
+    <header class="section-head" data-reveal>
+      <div>
+        <p class="kicker">{process.kicker}</p>
+        <h2 id="process-title" set:html={process.title} />
       </div>
+      {process.intro && <p class="section-intro">{process.intro}</p>}
+    </header>
+    <ol class="process-steps">
+      {process.steps.map((step, index) => (
+        <li data-reveal>
+          <span class="step-number">{index + 1}</span>
+          <h3>{step.title}</h3>
+          <p>{step.description}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
 
-      <div class="builder-cards">
-        <a class="builder-card founder-card" href={copy.builder.spotlight.href} target="_blank" rel="noopener noreferrer" data-reveal>
-          <span class="builder-card-label">{copy.builder.spotlight.label}</span>
-          <div class="builder-card-art" aria-hidden="true"><i></i><i></i><b></b></div>
-          <strong>{copy.builder.spotlight.title}</strong>
-          <small>{copy.builder.spotlight.cta} <Icon name="arrow-up-right" size={15} /></small>
-        </a>
-        <div class="builder-card education-card" data-reveal>
-          <span class="builder-card-label">{copy.builder.certs.label}</span>
-          <strong>{copy.builder.certs.title}</strong>
-          <p>{copy.builder.certs.subtitle}</p>
-          <div class="cert-list">
-            {copy.builder.certs.items.map((cert) => <span><Icon name="check" size={14} /> {cert}</span>)}
-          </div>
+  <section class="section container" id="experience" aria-labelledby="experience-title">
+    <div class="experience-grid">
+      <header class="experience-head" data-reveal>
+        <p class="kicker">{experience.kicker}</p>
+        <h2 id="experience-title" set:html={experience.title} />
+        {experience.intro && <p class="section-intro">{experience.intro}</p>}
+        <a class="text-link" href={profile.linkedin} target="_blank" rel="noopener noreferrer">{experience.link} <Icon name="arrow-up-right" size={15} /></a>
+        <div class="certs">
+          <p class="certs-title">{experience.certsTitle}</p>
+          <ul>
+            {experience.certs.map((cert) => <li><Icon name="check" size={14} /> {cert}</li>)}
+          </ul>
         </div>
-        <figure class="portrait-card" data-reveal>
-          <div class="portrait-copy">
-            <span>{copy.builder.portrait.label}</span>
-            <strong set:html={copy.builder.portrait.title} />
-            <small>{copy.builder.portrait.caption}</small>
-          </div>
-          <i class="portrait-mark" aria-hidden="true">{profile.initials}</i>
-        </figure>
+      </header>
+      <ol class="timeline">
+        {experience.items.map((item) => (
+          <li class="timeline-item" data-reveal>
+            <div class="timeline-head">
+              <h3>{item.company}</h3>
+              {item.location && <span>{item.location}</span>}
+            </div>
+            <ul class="timeline-roles">
+              {item.roles.map((role) => (
+                <li><strong>{role.title}</strong><span>{role.dates}</span></li>
+              ))}
+            </ul>
+            <p>{item.note}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section container" id="stack" aria-labelledby="stack-title">
+    <header class="section-head" data-reveal>
+      <div>
+        <p class="kicker">{stack.kicker}</p>
+        <h2 id="stack-title" set:html={stack.title} />
+      </div>
+      {stack.intro && <p class="section-intro">{stack.intro}</p>}
+    </header>
+    <div class="stack-grid">
+      {stack.groups.map((group) => (
+        <div class="stack-group" data-reveal>
+          <p class="stack-label">{group.label}</p>
+          <ul class="chips">{group.items.map((item) => <li>{item}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section container" id="about" aria-labelledby="about-title">
+    <div class="about-grid">
+      <header data-reveal>
+        <p class="kicker">{about.kicker}</p>
+        <h2 id="about-title" set:html={about.title} />
+        <ul class="about-facts">{about.facts.map((fact) => <li><span aria-hidden="true">{fact.emoji}</span>{fact.label}</li>)}</ul>
+      </header>
+      <div class="about-text" data-reveal>
+        {about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
       </div>
     </div>
   </section>
 
-  <section class="contact-section shell" id="contact" aria-labelledby="contact-title" data-reveal>
-    <div class="contact-orb" aria-hidden="true"><i></i><i></i><i></i></div>
-    <div class="contact-copy">
-      <span class="section-kicker">{copy.contact.kicker}</span>
-      <h2 id="contact-title" set:html={copy.contact.title} />
-      <p>{copy.contact.body}</p>
+  <section class="container contact-wrap" id="contact" aria-labelledby="contact-title">
+    <div class="contact" data-reveal>
+      <p class="kicker">{contact.kicker}</p>
+      <h2 id="contact-title" set:html={contact.title} />
+      <p class="contact-body">{contact.body}</p>
       <div class="contact-actions">
-        <a class="button button-light" href={profile.linkedin} target="_blank" rel="noopener noreferrer">{copy.contact.cta} <Icon name="arrow-up-right" size={17} /></a>
+        <a class="button button-contrast" href={profile.linkedin} target="_blank" rel="noopener noreferrer">{contact.cta} <Icon name="arrow-up-right" size={17} /></a>
+        <ul class="contact-socials">
+          {socialLinks.map((link) => (
+            <li>
+              <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label} title={link.label}>
+                <Icon name={link.icon} size={18} />
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
-    <div class="contact-socials">
-      {socialLinks.map((link) => (
-        <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
-          <Icon name={link.icon} size={19} />
-        </a>
-      ))}
     </div>
   </section>
 </BaseLayout>

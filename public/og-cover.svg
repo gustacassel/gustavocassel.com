@@ -1,39 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5f0e8"/><stop offset="1" stop-color="#e8dfd7"/></linearGradient>
-    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#7157ff"/><stop offset=".55" stop-color="#74e2d0"/><stop offset="1" stop-color="#ff6542"/></linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="20" stdDeviation="24" flood-color="#17151d" flood-opacity=".18"/></filter>
-    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0v34" fill="none" stroke="#fff" stroke-opacity=".09"/></pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="190%"><feDropShadow dx="0" dy="24" stdDeviation="26" flood-color="#160e1e" flood-opacity=".22"/></filter>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <circle cx="100" cy="72" r="210" fill="#7157ff" opacity=".08"/>
-  <circle cx="1110" cy="565" r="230" fill="#ff6542" opacity=".09"/>
-  <g transform="translate(66 64)">
-    <rect width="46" height="46" rx="14" fill="#16151b"/>
-    <text x="23" y="32" text-anchor="middle" fill="#f5f0e8" font-family="Georgia, serif" font-size="24" font-weight="700">G</text>
-    <text x="62" y="21" fill="#16151b" font-family="Arial, sans-serif" font-size="18" font-weight="700">Gustavo Cassel</text>
-    <text x="62" y="40" fill="#6f6865" font-family="Arial, sans-serif" font-size="11" letter-spacing="1.5">DESENVOLVEDOR .NET · RGO MÁQUINAS</text>
+  <rect width="1200" height="630" fill="#f5f0e8"/>
+  <g transform="translate(72 72)">
+    <circle cx="20" cy="20" r="20" fill="#16151b"/>
+    <text x="20" y="28" text-anchor="middle" fill="#f5f0e8" font-family="Georgia, serif" font-size="22" font-weight="700">G</text>
+    <text x="54" y="27" fill="#16151b" font-family="Arial, sans-serif" font-size="20" font-weight="700">Gustavo Cassel</text>
   </g>
-  <g transform="translate(66 196)">
-    <text x="0" y="0" fill="#16151b" font-family="Arial, sans-serif" font-size="58" font-weight="700" letter-spacing="-3">Software que</text>
-    <text x="0" y="70" fill="none" stroke="#16151b" stroke-width="1.4" font-family="Arial, sans-serif" font-size="58" font-weight="700" letter-spacing="-3">conecta a engenharia</text>
-    <text x="0" y="160" fill="#7157ff" font-family="Georgia, serif" font-size="88" font-style="italic">à fábrica.</text>
-    <text x="0" y="233" fill="#6f6865" font-family="Arial, sans-serif" font-size="18">C# · .NET · Blazor · Autodesk Inventor · Vault · TOTVS Protheus</text>
+  <g transform="translate(72 190)">
+    <circle cx="5" cy="-5" r="5" fill="#6a4ff5"/>
+    <text x="20" y="0" fill="#6a4ff5" font-family="Consolas, monospace" font-size="18">desenvolvedor de software · remoto</text>
+    <text x="0" y="78" fill="#16151b" font-family="Arial, sans-serif" font-size="60" font-weight="700" letter-spacing="-2.5">Construo os sistemas</text>
+    <text x="0" y="148" fill="#16151b" font-family="Arial, sans-serif" font-size="60" font-weight="700" letter-spacing="-2.5">que a sua empresa usa</text>
+    <text x="0" y="226" fill="#6a4ff5" font-family="Georgia, serif" font-size="72" font-style="italic">todo dia.</text>
+    <text x="0" y="300" fill="#6b6461" font-family="Arial, sans-serif" font-size="20">Sistemas sob medida · Integrações · Automação · Consultoria em TI</text>
   </g>
-  <g transform="translate(786 98) rotate(2 174 215)" filter="url(#shadow)">
-    <rect width="348" height="430" rx="28" fill="#16151b"/><rect width="348" height="430" rx="28" fill="url(#grid)"/>
-    <circle cx="24" cy="25" r="4" fill="#ff6542"/><circle cx="38" cy="25" r="4" fill="#f5c84c"/><circle cx="52" cy="25" r="4" fill="#74e2d0"/>
-    <text x="174" y="29" text-anchor="middle" fill="#85808c" font-family="monospace" font-size="9">cad-integrator.cs</text>
-    <rect x="24" y="58" width="300" height="62" rx="13" fill="#24212b" stroke="#393541"/>
-    <circle cx="53" cy="89" r="16" fill="#74e2d0"/><path d="m49 89 3 3 6-7" fill="none" stroke="#16151b" stroke-width="2"/>
-    <text x="78" y="86" fill="#f4f0e9" font-family="Arial, sans-serif" font-size="11">Enviar a montagem para o ERP.</text>
-    <text x="78" y="102" fill="#85808c" font-family="monospace" font-size="8">Inventor → Vault → Protheus</text>
-    <path d="M48 184H300" stroke="#4c4753"/><path d="M48 184H286" stroke="url(#line)" stroke-width="3"/>
-    <g font-family="Arial, sans-serif" text-anchor="middle"><circle cx="57" cy="184" r="8" fill="#74e2d0"/><circle cx="137" cy="184" r="8" fill="#a697ff"/><circle cx="217" cy="184" r="8" fill="#a697ff"/><circle cx="297" cy="184" r="8" fill="#ff6542"/><text x="57" y="213" fill="#f4f0e9" font-size="10">Ler</text><text x="137" y="213" fill="#f4f0e9" font-size="10">Validar</text><text x="217" y="213" fill="#f4f0e9" font-size="10">Processar</text><text x="297" y="213" fill="#f4f0e9" font-size="10">Entregar</text></g>
-    <rect x="24" y="250" width="300" height="146" rx="18" fill="#f5f0e8"/>
-    <text x="43" y="280" fill="#16151b" font-family="Arial, sans-serif" font-size="11" font-weight="700">Rastreamento</text>
-    <rect x="43" y="303" width="242" height="7" rx="4" fill="#d9d2c9"/><rect x="43" y="303" width="220" height="7" rx="4" fill="url(#line)"/><rect x="43" y="321" width="206" height="7" rx="4" fill="#d9d2c9"/><rect x="43" y="321" width="173" height="7" rx="4" fill="url(#line)"/>
-    <text x="43" y="368" fill="#6f6865" font-family="monospace" font-size="8">ORIGEM</text><text x="43" y="384" fill="#16151b" font-family="Arial, sans-serif" font-size="14" font-weight="700">Inventor</text><text x="140" y="368" fill="#6f6865" font-family="monospace" font-size="8">DESTINO</text><text x="140" y="384" fill="#16151b" font-family="Arial, sans-serif" font-size="14" font-weight="700">Protheus</text><text x="238" y="368" fill="#6f6865" font-family="monospace" font-size="8">STATUS</text><text x="238" y="384" fill="#16151b" font-family="Arial, sans-serif" font-size="14" font-weight="700">criado</text>
+  <g transform="translate(756 170)" filter="url(#shadow)">
+    <rect width="372" height="268" rx="18" fill="#18161f"/>
+    <circle cx="28" cy="28" r="6" fill="#ff6b57"/><circle cx="48" cy="28" r="6" fill="#f2c46b"/><circle cx="68" cy="28" r="6" fill="#3fc9a8"/>
+    <text x="92" y="33" fill="#7d778c" font-family="Consolas, monospace" font-size="14">Gustavo.cs</text>
+    <path d="M0 56H372" stroke="#ffffff" stroke-opacity=".07"/>
+    <g font-family="Consolas, monospace" font-size="16" xml:space="preserve">
+      <text x="26" y="100"><tspan fill="#a697ff">public class</tspan><tspan fill="#f2c46b"> Gustavo</tspan></text>
+      <text x="26" y="128" fill="#e6e2f0">{</text>
+      <text x="50" y="156"><tspan fill="#e6e2f0">Stack = </tspan><tspan fill="#74e2d0">".NET, SQL, Azure"</tspan><tspan fill="#e6e2f0">;</tspan></text>
+      <text x="50" y="184"><tspan fill="#e6e2f0">Atende = </tspan><tspan fill="#74e2d0">"remoto"</tspan><tspan fill="#e6e2f0">;</tspan></text>
+      <text x="50" y="212"><tspan fill="#e6e2f0">Resolve = </tspan><tspan fill="#74e2d0">"software"</tspan><tspan fill="#e6e2f0">;</tspan></text>
+      <text x="26" y="240" fill="#e6e2f0">}</text>
+    </g>
+    <rect x="40" y="226" width="9" height="17" fill="#a697ff"/>
   </g>
-  <rect x="66" y="573" width="1068" height="2" rx="1" fill="url(#line)"/>
 </svg>

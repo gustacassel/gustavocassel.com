@@ -4,13 +4,12 @@ import Icon from '../components/Icon.astro';
 import { routes } from '../data/site';
 ---
 
-<BaseLayout lang="pt" title="Página não encontrada — Gustavo Cassel" description="Esta página não existe." noindex>
-  <section class="not-found shell">
-    <div class="not-found-code" aria-hidden="true"><span>4</span><i></i><span>4</span></div>
-    <span class="section-kicker">Nenhuma rota encontrada</span>
-    <h1>Esta página não<br />está no <em>cadastro.</em></h1>
-    <p>O resto do site continua no lugar. <span lang="en">This page doesn’t exist.</span></p>
-    <div class="not-found-actions">
+<BaseLayout lang="pt" title="Página não encontrada | Gustavo Cassel" description="Esta página não existe." noindex>
+  <section class="not-found container">
+    <p class="kicker">404</p>
+    <h1>Esta página <em>não existe.</em></h1>
+    <p>O endereço pode ter mudado. <span lang="en">This page doesn’t exist.</span></p>
+    <div class="hero-actions">
       <a class="button button-primary" href={routes.home('pt')}>Voltar ao início <Icon name="arrow-right" size={17} /></a>
       <a class="button button-ghost" href={routes.home('en')} lang="en">English version</a>
     </div>

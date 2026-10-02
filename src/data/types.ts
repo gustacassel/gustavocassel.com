@@ -1,18 +1,19 @@
+import type { IconName } from '../components/icons';
+
 export type Lang = 'pt' | 'en';
 
 export type ExperienceEntry = {
   company: string;
   location?: string;
-  marker: string;
   roles: { title: string; dates: string }[];
   note: string;
 };
 
-export type ExpertiseEntry = {
-  number: string;
+type SectionHead = {
+  kicker: string;
+  /** html: aceita <em> para o destaque em itálico */
   title: string;
-  description: string;
-  tools: string[];
+  intro?: string;
 };
 
 /**
@@ -23,7 +24,7 @@ export type SiteContent = {
   role: string;
   bio: string;
   seo: { title: string; description: string };
-  nav: { expertise: string; about: string; contact: string };
+  nav: { services: string; experience: string; about: string; contact: string };
   ui: {
     skipLink: string;
     themeToDark: string;
@@ -31,76 +32,47 @@ export type SiteContent = {
     openNav: string;
     closeNav: string;
     primaryNav: string;
-    mobileNav: string;
     switchLang: string;
     headerCta: string;
-    mobileContact: string;
   };
   hero: {
     eyebrow: string;
-    location: string;
-    lead: string;
-    middle: string;
-    accent: string;
+    /** html */
+    title: string;
     summary: string;
     primaryCta: string;
     secondaryCta: string;
-    stamp: string;
   };
-  demo: {
-    file: string;
-    live: string;
-    run: string;
-    runAria: string;
-    pipelineAria: string;
-    outputTitle: string;
-    ready: string;
-    statLabels: [string, string, string];
-    steps: { title: string; detail: string }[];
-    runs: { query: string; values: [string, string, string] }[];
-    statusRunning: string;
-    statusDone: string;
-    orbits: [string, string];
+  /** Propriedades da classe C# mostrada na janela de código do topo. */
+  code: { file: string; props: [name: string, value: string][] };
+  services: SectionHead & {
+    items: { icon: IconName; title: string; description: string }[];
   };
-  techStrip: { value: string; label: string }[];
-  techStripAria: string;
-  expertise: {
-    kicker: string;
-    /** html */
-    title: string;
-    intro: string;
-    items: ExpertiseEntry[];
+  platforms: SectionHead & {
+    items: { name: string; vendor: string; description: string }[];
   };
-  journey: {
-    kicker: string;
-    /** html */
-    title: string;
-    intro: string;
+  process: SectionHead & {
+    steps: { title: string; description: string }[];
+  };
+  experience: SectionHead & {
     link: string;
     items: ExperienceEntry[];
+    certsTitle: string;
+    certs: string[];
   };
-  builder: {
-    kicker: string;
-    /** html */
-    title: string;
-    lead: string;
-    body: string;
-    spotlight: { label: string; title: string; href: string; cta: string };
-    certs: { label: string; title: string; subtitle: string; items: string[] };
-    portrait: { label: string; /** html */ title: string; caption: string };
+  stack: SectionHead & {
+    groups: { label: string; items: string[] }[];
   };
-  contact: {
-    kicker: string;
-    /** html */
-    title: string;
+  about: SectionHead & {
+    paragraphs: string[];
+    facts: { emoji: string; label: string }[];
+  };
+  contact: SectionHead & {
     body: string;
     cta: string;
   };
   footer: {
-    /** html */
     tagline: string;
-    findMe: string;
-    credit: string;
     backToTop: string;
   };
 };

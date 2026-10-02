@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { profile, socialLinks, template, getContent, routes, type Lang } from '../data/site';
+import { profile, socialLinks, getContent, type Lang } from '../data/site';
 
 interface Props {
   lang: Lang;
@@ -12,24 +12,23 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <div class="shell footer-main">
+  <div class="container footer-inner">
     <div>
-      <a class="footer-brand" href={routes.home(lang)}>{profile.shortName} <span>·</span> Cassel</a>
-      <p set:html={copy.footer.tagline} />
+      <p class="footer-name">{profile.name}</p>
+      <p class="footer-tagline">{copy.footer.tagline}</p>
     </div>
-    <div class="footer-links">
-      <span class="footer-label">{copy.footer.findMe}</span>
+    <ul class="footer-links">
       {socialLinks.map((link) => (
-        <a href={link.href} target="_blank" rel="noopener noreferrer">
-          {link.label}
-          <Icon name="arrow-up-right" size={15} />
-        </a>
+        <li>
+          <a href={link.href} target="_blank" rel="noopener noreferrer">
+            <Icon name={link.icon} size={16} /> {link.label}
+          </a>
+        </li>
       ))}
-    </div>
+    </ul>
   </div>
-  <div class="shell footer-bottom">
+  <div class="container footer-bottom">
     <span>© {year} {profile.name}</span>
-    <a href={template.creatorUrl} target="_blank" rel="noopener noreferrer">{copy.footer.credit}</a>
-    <a href="#top">{copy.footer.backToTop}</a>
+    <a href="#top">{copy.footer.backToTop} ↑</a>
   </div>
 </footer>

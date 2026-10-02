@@ -14,32 +14,32 @@ const otherLang: Lang = lang === 'pt' ? 'en' : 'pt';
 const isHome = Astro.url.pathname === routes.home(lang) || Astro.url.pathname === `${routes.home(lang)}/`;
 const anchor = (id: string) => (isHome ? `#${id}` : routes.section(lang, id));
 const nav = [
-  { label: copy.nav.expertise, href: anchor('expertise') },
+  { label: copy.nav.services, href: anchor('services') },
+  { label: copy.nav.experience, href: anchor('experience') },
   { label: copy.nav.about, href: anchor('about') },
   { label: copy.nav.contact, href: anchor('contact') },
 ];
 ---
 
 <header class="site-header" data-header>
-  <div class="header-inner shell">
+  <div class="header-inner container">
     <a class="brand" href={routes.home(lang)}>
-        <span class="brand-mark" aria-hidden="true">{profile.initials.slice(0, 1)}</span>
-        <span class="brand-copy">
-        <strong>{profile.name}</strong>
-        <small>{copy.role}</small>
-      </span>
+      <span class="brand-mark" aria-hidden="true">G</span>
+      <span>{profile.name}</span>
     </a>
 
-    <nav class="desktop-nav" aria-label={copy.ui.primaryNav}>
-      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    <nav class="site-nav" id="site-nav" aria-label={copy.ui.primaryNav} data-nav>
+      <ul>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
     </nav>
 
     <div class="header-actions">
-      <a class="lang-toggle" href={alternates[otherLang]} hreflang={languages[otherLang].htmlLang} lang={languages[otherLang].htmlLang} aria-label={copy.ui.switchLang} title={copy.ui.switchLang}>
+      <a class="pill-button" href={alternates[otherLang]} hreflang={languages[otherLang].htmlLang} lang={languages[otherLang].htmlLang} aria-label={copy.ui.switchLang} title={copy.ui.switchLang}>
         {languages[otherLang].label}
       </a>
       <button
-        class="theme-toggle"
+        class="pill-button"
         type="button"
         aria-label={copy.ui.themeToDark}
         aria-pressed="false"
@@ -48,86 +48,53 @@ const nav = [
         data-label-dark={copy.ui.themeToDark}
         data-label-light={copy.ui.themeToLight}
       >
-        <span class="theme-icon theme-icon-sun"><Icon name="sun" size={17} /></span>
-        <span class="theme-icon theme-icon-moon"><Icon name="moon" size={17} /></span>
+        <span class="theme-icon-sun"><Icon name="sun" size={16} /></span>
+        <span class="theme-icon-moon"><Icon name="moon" size={16} /></span>
       </button>
-      <a class="header-cta" href={profile.linkedin} target="_blank" rel="noopener noreferrer">
-        {copy.ui.headerCta}
-        <Icon name="arrow-up-right" size={16} />
-      </a>
+      <a class="button button-primary button-small header-cta" href={anchor('contact')}>{copy.ui.headerCta}</a>
+      <button
+        class="pill-button nav-toggle"
+        type="button"
+        aria-label={copy.ui.openNav}
+        aria-expanded="false"
+        aria-controls="site-nav"
+        data-nav-toggle
+        data-label-open={copy.ui.openNav}
+        data-label-close={copy.ui.closeNav}
+      >
+        <span class="nav-open"><Icon name="menu" size={18} /></span>
+        <span class="nav-close"><Icon name="close" size={18} /></span>
+      </button>
     </div>
-
-    <button
-      class="nav-toggle"
-      type="button"
-      aria-label={copy.ui.openNav}
-      aria-expanded="false"
-      aria-controls="mobile-nav"
-      data-nav-toggle
-      data-label-open={copy.ui.openNav}
-      data-label-close={copy.ui.closeNav}
-    >
-      <span class="nav-open"><Icon name="menu" /></span>
-      <span class="nav-close"><Icon name="close" /></span>
-    </button>
   </div>
-
-  <nav class="mobile-nav" id="mobile-nav" aria-label={copy.ui.mobileNav} data-mobile-nav inert>
-    <div class="shell">
-      {nav.map((item, index) => <a href={item.href}><span>0{index + 1}</span>{item.label}</a>)}
-      <a class="mobile-contact" href={profile.linkedin} target="_blank" rel="noopener noreferrer">{copy.ui.mobileContact} <Icon name="arrow-up-right" /></a>
-    </div>
-  </nav>
 </header>
 
 <script>
   const setupHeader = () => {
     const header = document.querySelector<HTMLElement>('[data-header]');
     const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
-    const mobileNav = document.querySelector<HTMLElement>('[data-mobile-nav]');
-    if (!header || !toggle || !mobileNav || toggle.dataset.ready) return;
+    const nav = document.querySelector<HTMLElement>('[data-nav]');
+    if (!header || !toggle || !nav || toggle.dataset.ready) return;
     toggle.dataset.ready = 'true';
-    const openLabel = toggle.dataset.labelOpen ?? '';
-    const closeLabel = toggle.dataset.labelClose ?? '';
 
-    const close = () => {
-      header.classList.remove('menu-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', openLabel);
-      mobileNav.inert = true;
-      document.body.classList.remove('nav-locked');
+    const setOpen = (open: boolean) => {
+      header.classList.toggle('menu-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '');
     };
 
-    toggle.addEventListener('click', () => {
-      const willOpen = !header.classList.contains('menu-open');
-      if (!willOpen) {
-        close();
-        return;
-      }
-      header.classList.add('menu-open');
-      toggle.setAttribute('aria-expanded', 'true');
-      toggle.setAttribute('aria-label', closeLabel);
-      mobileNav.inert = false;
-      document.body.classList.add('nav-locked');
-      requestAnimationFrame(() => mobileNav.querySelector<HTMLAnchorElement>('a')?.focus());
-    });
-
-    mobileNav.querySelectorAll('a').forEach((link) => link.addEventListener('click', close));
+    toggle.addEventListener('click', () => setOpen(!header.classList.contains('menu-open')));
+    nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape' || !header.classList.contains('menu-open')) return;
-      close();
+      setOpen(false);
       toggle.focus();
     });
-    window.addEventListener('resize', () => { if (window.innerWidth > 820) close(); }, { passive: true });
   };
-  setupHeader();
-  document.addEventListener('astro:page-load', setupHeader);
-</script>
 
-<script>
   const setupThemeToggle = () => {
-    document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]:not([data-theme-ready])').forEach((toggle) => {
-      toggle.dataset.themeReady = 'true';
+    document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]:not([data-ready])').forEach((toggle) => {
+      toggle.dataset.ready = 'true';
 
       const updateLabel = () => {
         const isDark = document.documentElement.dataset.theme === 'dark';
@@ -136,7 +103,7 @@ const nav = [
         toggle.setAttribute('title', label);
         toggle.setAttribute('aria-pressed', String(isDark));
         document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
-          meta.setAttribute('content', isDark ? '#111016' : '#f5f0e8');
+          meta.setAttribute('content', isDark ? '#141218' : '#f5f0e8');
         });
       };
 
@@ -151,6 +118,6 @@ const nav = [
     });
   };
 
+  setupHeader();
   setupThemeToggle();
-  document.addEventListener('astro:page-load', setupThemeToggle);
 </script>
