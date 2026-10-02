@@ -1,0 +1,13 @@
+{
+  "name": "Gustavo Cassel — Desenvolvedor .NET",
+  "short_name": "Gustavo Cassel",
+  "description": "Portfolio de Gustavo Cassel: sistemas internos em .NET e integrações entre CAD e ERP.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f0e8",
+  "theme_color": "#f5f0e8",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

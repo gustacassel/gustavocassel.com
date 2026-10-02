@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+import { profile, socialLinks, template, getContent, routes, type Lang } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const copy = getContent(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell footer-main">
+    <div>
+      <a class="footer-brand" href={routes.home(lang)}>{profile.shortName} <span>·</span> Cassel</a>
+      <p set:html={copy.footer.tagline} />
+    </div>
+    <div class="footer-links">
+      <span class="footer-label">{copy.footer.findMe}</span>
+      {socialLinks.map((link) => (
+        <a href={link.href} target="_blank" rel="noopener noreferrer">
+          {link.label}
+          <Icon name="arrow-up-right" size={15} />
+        </a>
+      ))}
+    </div>
+  </div>
+  <div class="shell footer-bottom">
+    <span>© {year} {profile.name}</span>
+    <a href={template.creatorUrl} target="_blank" rel="noopener noreferrer">{copy.footer.credit}</a>
+    <a href="#top">{copy.footer.backToTop}</a>
+  </div>
+</footer>

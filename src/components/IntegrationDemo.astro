@@ -1,0 +1,124 @@
+---
+import Icon from './Icon.astro';
+import { getContent, type Lang } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const demo = getContent(lang).demo;
+const [firstRun] = demo.runs;
+---
+
+<div
+  class="inference-demo"
+  data-integration-demo
+  data-runs={JSON.stringify(demo.runs)}
+  data-status-running={demo.statusRunning}
+  data-status-done={demo.statusDone}
+>
+  <div class="demo-chrome">
+    <div class="chrome-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+    <span>{demo.file}</span>
+    <span class="live-pill"><i></i> {demo.live}</span>
+  </div>
+
+  <div class="demo-body">
+    <div class="demo-prompt">
+      <span class="prompt-mark"><Icon name="network" size={15} /></span>
+      <p data-demo-query>{firstRun.query}</p>
+      <button type="button" data-demo-run aria-label={demo.runAria}>
+        {demo.run} <Icon name="arrow-right" size={14} />
+      </button>
+    </div>
+
+    <div class="pipeline" role="group" aria-label={demo.pipelineAria}>
+      <div class="pipeline-line"><span></span></div>
+      {demo.steps.map((step, index) => (
+        <div class:list={['pipeline-step', { 'is-active': index === 0 }]} data-demo-step>
+          <span class="step-index">0{index + 1}</span>
+          <strong>{step.title}</strong>
+          <small>{step.detail}</small>
+        </div>
+      ))}
+    </div>
+
+    <div class="demo-output">
+      <div class="output-head">
+        <span>{demo.outputTitle}</span>
+        <span class="output-ready"><Icon name="check" size={14} /> {demo.ready}</span>
+      </div>
+      <div class="trace-lines" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="demo-stats">
+        {demo.statLabels.map((label, index) => (
+          <span><small>{label}</small><strong data-demo-value={index}>{firstRun.values[index]}</strong></span>
+        ))}
+      </div>
+    </div>
+    <p class="sr-only" role="status" aria-live="polite" data-demo-status></p>
+  </div>
+
+  <span class="demo-orbit orbit-one" aria-hidden="true">{demo.orbits[0]}</span>
+  <span class="demo-orbit orbit-two" aria-hidden="true">{demo.orbits[1]}</span>
+</div>
+
+<script>
+  type Run = { query: string; values: string[] };
+
+  const setupIntegrationDemo = () => {
+    const demos = document.querySelectorAll<HTMLElement>('[data-integration-demo]:not([data-ready])');
+    demos.forEach((demo) => {
+      demo.dataset.ready = 'true';
+      const button = demo.querySelector<HTMLButtonElement>('[data-demo-run]');
+      const query = demo.querySelector<HTMLElement>('[data-demo-query]');
+      const values = [...demo.querySelectorAll<HTMLElement>('[data-demo-value]')];
+      const status = demo.querySelector<HTMLElement>('[data-demo-status]');
+      const steps = [...demo.querySelectorAll<HTMLElement>('[data-demo-step]')];
+      const runs: Run[] = JSON.parse(demo.dataset.runs ?? '[]');
+      if (!button || !query || runs.length === 0) return;
+
+      let runIndex = 0;
+      let timers: number[] = [];
+
+      button.addEventListener('click', () => {
+        timers.forEach(window.clearTimeout);
+        timers = [];
+        runIndex = (runIndex + 1) % runs.length;
+        demo.classList.remove('is-complete');
+        steps.forEach((step) => step.classList.remove('is-active', 'is-done'));
+        button.disabled = true;
+        demo.setAttribute('aria-busy', 'true');
+        if (status) status.textContent = demo.dataset.statusRunning ?? '';
+
+        steps.forEach((step, index) => {
+          timers.push(window.setTimeout(() => {
+            if (index > 0) {
+              steps[index - 1].classList.remove('is-active');
+              steps[index - 1].classList.add('is-done');
+            }
+            step.classList.add('is-active');
+          }, index * 330));
+        });
+
+        timers.push(window.setTimeout(() => {
+          const run = runs[runIndex];
+          steps.at(-1)?.classList.remove('is-active');
+          steps.at(-1)?.classList.add('is-done');
+          query.textContent = run.query;
+          values.forEach((value, index) => { value.textContent = run.values[index] ?? ''; });
+          demo.classList.add('is-complete');
+          demo.removeAttribute('aria-busy');
+          if (status) status.textContent = `${demo.dataset.statusDone ?? ''} ${run.values.join(' · ')}`;
+          button.disabled = false;
+        }, steps.length * 330));
+      });
+    });
+  };
+  setupIntegrationDemo();
+  document.addEventListener('astro:page-load', setupIntegrationDemo);
+</script>
