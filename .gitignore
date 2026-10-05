@@ -10,5 +10,3 @@ dist/
 # Visual Studio
 .vs/
 
-# Documentos pessoais que não devem ir para o repositório público
-Profile.pdf
