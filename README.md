@@ -1,72 +1,84 @@
 # gustavocassel.com
 
-Site pessoal de Gustavo Cassel: desenvolvimento de software sob medida, integrações, automações e consultoria em TI.
+Personal website of Gustavo Cassel: custom software development, integrations, process automation and IT consulting.
 
-Feito com [Astro](https://astro.build), estático, em português (`/`) e inglês (`/en`), com tema claro e escuro.
+Built with [Astro](https://astro.build) as a static site, in Portuguese (`/`) and English (`/en`), with light and dark themes.
 
-## Rodar localmente
+## Running locally
 
-Requer Node.js 22.12 ou mais recente.
+Requires Node.js 22.12 or later.
 
 ```bash
 npm install
 npm run dev
 ```
 
-Abra <http://localhost:4321>. A página recarrega sozinha a cada alteração salva.
+Open <http://localhost:4321>. The page reloads on every saved change.
 
-Para gerar e conferir a versão de produção:
+To build and check the production version:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-O `build` roda o `astro check` antes, então erros de tipo param o build.
+`build` runs `astro check` first, so type errors stop the build.
 
-## Onde editar
+## Where to edit
 
-| O quê | Arquivo |
+| What | File |
 | --- | --- |
-| Textos em português | `src/data/pt.ts` |
-| Textos em inglês | `src/data/en.ts` |
-| Formato dos textos (tipos) | `src/data/types.ts` |
-| Nome e links das redes | `src/data/site.ts` |
-| Seções da página | `src/components/Home.astro` |
-| Cabeçalho e rodapé | `src/components/Header.astro`, `src/components/Footer.astro` |
-| Janela de código do topo | `src/components/CodeWindow.astro` |
-| Ícones | `src/components/icons.ts` |
-| Cores, fontes e layout | `src/styles/global.css` |
-| SEO, metadados e tema | `src/layouts/BaseLayout.astro` |
-| Imagem de compartilhamento | `public/og-cover.svg` |
+| Portuguese copy | `src/data/pt.ts` |
+| English copy | `src/data/en.ts` |
+| Copy structure (types) | `src/data/types.ts` |
+| Name and social links | `src/data/site.ts` |
+| Page sections | `src/components/Home.astro` |
+| Header and footer | `src/components/Header.astro`, `src/components/Footer.astro` |
+| Code window in the hero | `src/components/CodeWindow.astro` |
+| Icons | `src/components/icons.ts` |
+| Colors, fonts and layout | `src/styles/global.css` |
+| SEO, metadata and theme | `src/layouts/BaseLayout.astro` |
+| Social sharing image | `public/og-cover.svg` |
 
-Campos marcados como `html` em `types.ts` aceitam `<em>` e `<br />`. O `<em>` vira o destaque em itálico roxo dos títulos.
+Fields marked as `html` in `types.ts` accept `<em>` and `<br />`. The `<em>` becomes the purple italic highlight in headings.
 
-Depois de editar `public/og-cover.svg`, gere o PNG de novo:
+After editing `public/og-cover.svg`, render the PNG again:
 
 ```bash
 node -e "require('sharp')('public/og-cover.svg').png().toFile('public/og-cover.png')"
 ```
 
-## Publicação
+## Deployment
 
-Hospedado na Cloudflare Workers & Pages, com deploy automático a cada `git push` na `main`.
+Hosted on Cloudflare Workers, with automatic deploys on every `git push` to `main`. The configuration lives in `wrangler.jsonc`: the Worker only serves the static files in `dist/`.
 
-1. No painel da Cloudflare: **Compute → Workers & Pages → Create → Import a repository**, e selecione este repositório. Build command `npm run build`, output directory `dist`.
-2. No app criado: **Settings → Domains & Routes → Add → Custom domain**. Adicione `gustavocassel.com` e `www.gustavocassel.com`.
-3. No painel do domínio: **Rules → Redirect Rules**, template **"Redirect from WWW to root"**, para que o endereço principal seja `https://gustavocassel.com`.
+To test the configuration without publishing:
 
-## Pendências
+```bash
+npm run build
+npx wrangler deploy --dry-run
+```
 
-- [ ] Criar `contato@gustavocassel.com` no Cloudflare Email Routing e colocar no site
-- [ ] Publicar na Cloudflare (passos acima)
-- [ ] Seção de projetos, quando houver projetos públicos
+One-time setup:
 
-## Licença
+1. In the Cloudflare dashboard: **Workers & Pages → Create → Import a repository**, connect GitHub and select this repository. Private repositories work.
+2. Project name: `gustavocassel-com` (it must match `name` in `wrangler.jsonc`). Build command `npm run build`, deploy command `npx wrangler deploy`.
+3. In the new Worker: **Settings → Domains & Routes → Add → Custom domain**. Add `gustavocassel.com` and `www.gustavocassel.com`.
+4. In the domain dashboard: **Rules → Redirect Rules**, template **"Redirect from WWW to root"**, so the main address is `https://gustavocassel.com`.
 
-Todos os direitos reservados. Textos, imagens e o restante do conteúdo não podem ser reutilizados.
+If a build fails, the site stays up with the last successful version.
 
-Partes da estrutura inicial (layout base, script de tema) vieram do template [LatentFolio Free](https://github.com/Dharani-Eswaramurthi/latentfolio), sob licença MIT:
+## To do
+
+- [ ] Create `contato@gustavocassel.com` in Cloudflare Email Routing and add it to the site
+- [ ] Publish on Cloudflare (steps above)
+- [ ] Projects section, once there are public projects
+
+## License
+
+All rights reserved. The text, images and other content may not be reused.
+
+Parts of the initial structure (base layout, theme script) came from the [LatentFolio Free](https://github.com/Dharani-Eswaramurthi/latentfolio) template, under the MIT License:
 
 <details>
 <summary>MIT License, LatentFolio Free</summary>
@@ -97,4 +109,4 @@ SOFTWARE.
 
 </details>
 
-Fontes (Instrument Sans, Newsreader e JetBrains Mono) sob SIL Open Font License, via Fontsource. Ícones baseados no [Lucide](https://lucide.dev), sob ISC License.
+Fonts (Instrument Sans, Newsreader and JetBrains Mono) under the SIL Open Font License, via Fontsource. Icons based on [Lucide](https://lucide.dev), under the ISC License.

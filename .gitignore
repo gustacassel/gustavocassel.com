@@ -1,12 +1,19 @@
+# Node
 node_modules/
+*.log
+
+# Astro
 dist/
 .astro/
-.DS_Store
-*.log
+
+# Cloudflare (wrangler)
+.wrangler/
+
+# Environment variables
 .env
 .env.*
 !.env.example
 
-# Visual Studio
+# Editors and OS
 .vs/
-
+.DS_Store

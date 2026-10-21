@@ -1,0 +1,13 @@
+{
+  // Deploy na Cloudflare: o site é estático, então o Worker só serve os arquivos de dist/.
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "gustavocassel-com",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // Combina com trailingSlash: 'never' do Astro: /en/ redireciona para /en.
+    "html_handling": "drop-trailing-slash",
+    // Endereço inexistente mostra o dist/404.html com status 404.
+    "not_found_handling": "404-page"
+  }
+}
